@@ -8,6 +8,7 @@ import Footer from './FooterComponent';
 import Home from './HomeComponent';
 import Contact from './ContactComponent';
 import About from './AboutComponent';
+import { addComment } from '../redux/ActionCreators';
 
 
 class Main extends Component {
@@ -34,7 +35,9 @@ class Main extends Component {
     const DishWithId = ({match}) => {
         return(
             <DishDetail dish={this.props.dishes.filter((dish) => dish.id === parseInt(match.params.dishId,10))[0]} // base10 - decimal
-              comments={this.props.comments.filter((comment) => comment.dishId === parseInt(match.params.dishId,10))} />
+              comments={this.props.comments.filter((comment) => comment.dishId === parseInt(match.params.dishId,10))}
+              addComment={this.props.addComment}
+              />
         );
       };
 
@@ -71,6 +74,12 @@ class Main extends Component {
   
 }
 
+// dispatch is a store function accessed through the connect function
+const mapDispatchToProps = (dispatch) => ({
+  addComment: (dishId, rating, author, comment) => dispatch(addComment(dishId, rating, author, comment))
+
+})
+
 const mapStateToProps = (state) => {
     return {
       dishes: state.dishes,
@@ -81,4 +90,4 @@ const mapStateToProps = (state) => {
 }
 
 // Surround Main with connect so that it is subscribed to  the store
-export default withRouter(connect(mapStateToProps) (Main));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps) (Main));
