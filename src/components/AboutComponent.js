@@ -1,33 +1,45 @@
 import React from 'react';
 import { Breadcrumb, BreadcrumbItem, Card, CardBody, CardHeader, Media } from 'reactstrap';
 import { Link } from 'react-router-dom';
+import { FadeTransform, Fade, Stagger } from 'react-animation-components';
+import { Loading } from './LoadingComponent';
+import { baseUrl } from '../shared/baseUrl';
+
 
 function About(props) {
 
-    const leaders = props.leaders.map((leader) => {
-        return (
-            <RenderLeader leader = {leader} />
-        );
-    });
-
-    function RenderLeader({leader}) {
-        return(
-            <div key={leader.id} className="col-12 mt-5">
-                <Media tag="li" >
-                    <Media left middle>
-                        <Media object src={leader.image} alt={leader.name} >
-
-                        </Media>
-                    </Media>
-                    <Media body className="ml-4">
-                        <Media heading>{leader.name}</Media>
-                        <p>{leader.designation}</p>
-                        <p>{leader.description}</p>
-                    </Media>
+    const RenderLeaders = ({ leaders, leaderLoading, leaderErrMess }) => {
+    
+        const leaders_list = leaders.map(leader => {
+          return (
+            <Fade in key={leader.id}>
+              <Media>
+                <Media left>
+                  <Media object src={baseUrl + leader.image} alt={leader.name} />
                 </Media>
-            </div>
-            );
-        }
+                <Media body className="ml-3">
+                  <Media heading>{leader.name}</Media>
+                  <p>{leader.designation}</p>
+                  <p>{leader.description}</p>
+                </Media>
+              </Media>
+            </Fade>
+          );
+        });
+        // Returning the complete leader's list
+        if (leaderLoading) {
+          return <Loading />;
+        } else if (leaderErrMess) {
+          return <h4>{leaderErrMess}</h4>;
+        } else
+          return (
+            <Media list>
+              <Stagger in>{leaders_list}</Stagger>
+            </Media>
+          );
+      };
+
+    
 
     return(
         <div className="container">
@@ -85,7 +97,11 @@ function About(props) {
                 </div>
                 <div className="col-12">
                     <Media list>
-                        {leaders}
+                    <RenderLeaders
+                        leaders={props.leaders}
+                        leaderLoading={props.isLoading}
+                        leaderErrMess={props.errMess}
+          />
                     </Media>
                 </div>
             </div>

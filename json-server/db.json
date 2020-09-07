@@ -279,6 +279,26 @@
       "message": "afadsfds",
       "date": "2017-12-04T09:41:49.890Z",
       "id": 1
+    },
+    {
+      "firstname": "Samuel",
+      "lastname": "Bwambale",
+      "telnum": "6415040003",
+      "email": "samuel.bwambale63@gmail.com",
+      "agree": true,
+      "contactType": "Email",
+      "message": "This is test feedback",
+      "id": 2
+    },
+    {
+      "firstname": "Samuel",
+      "lastname": "Bwambale",
+      "telnum": "6415040003",
+      "email": "samuel.bwambale63@gmail.com",
+      "agree": true,
+      "contactType": "Tel.",
+      "message": "Another feedback",
+      "id": 3
     }
   ]
 }
