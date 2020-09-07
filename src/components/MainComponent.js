@@ -9,23 +9,17 @@ import Footer from './FooterComponent';
 import Home from './HomeComponent';
 import Contact from './ContactComponent';
 import About from './AboutComponent';
-import { addComment, fetchDishes, fetchComments, fetchPromos } from '../redux/ActionCreators';
+import { postComment, fetchDishes, fetchComments, fetchPromos } from '../redux/ActionCreators';
 
 
 
 class Main extends Component {
-
-//   onDishSelect(dishId) {
-//     this.setState({ selectedDish: dishId});
-//     }
 
 componentDidMount() {
   this.props.fetchDishes();
   this.props.fetchComments();
   this.props.fetchPromos();
 }
-
-
 
   render() {
 
@@ -51,7 +45,7 @@ componentDidMount() {
             errMess={this.props.dishes.errMess}
             comments={this.props.comments.comments.filter((comment) => comment.dishId === parseInt(match.params.dishId,10))}
             commentsErrMess={this.props.comments.errMess}
-            addComment={this.props.addComment}
+            postComment={this.props.postComment}
           />
         );
       };
@@ -59,16 +53,6 @@ componentDidMount() {
     return (
       <div>
             <Header />
-            {/* <Menu
-                dishes={this.state.dishes}
-                onClick={(dishId) => this.onDishSelect(dishId)}
-                />
-            <div className="col">
-            <DishDetail
-                dish={this.state.dishes.filter((dish) => dish.id === this.state.selectedDish)[0]} 
-                />
-            </div> */}
-
             <Switch>
                 <Route path="/home" component={HomePage}/>
                 <Route exact path="/menu" component={() => 
@@ -93,11 +77,11 @@ componentDidMount() {
 
 // dispatch is a store function accessed through the connect function
 const mapDispatchToProps = dispatch => ({
-  addComment: (dishId, rating, author, comment) => dispatch(addComment(dishId, rating, author, comment)),
+  postComment: (dishId, rating, author, comment) => dispatch(postComment(dishId, rating, author, comment)),
   fetchDishes: () => { dispatch(fetchDishes())},
   resetFeedbackForm: () => { dispatch(actions.reset('feedback'))}, // to reset the form
   fetchComments: () => dispatch(fetchComments()),
-  fetchPromos: () => dispatch(fetchPromos())
+  fetchPromos: () => dispatch(fetchPromos()),
 });
 
 const mapStateToProps = (state) => {
