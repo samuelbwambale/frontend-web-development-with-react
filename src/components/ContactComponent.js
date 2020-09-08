@@ -25,6 +25,7 @@ class Contact extends Component {
         console.log('Current State is: ' + JSON.stringify(values));
         alert('Current State is: ' + JSON.stringify(values));
         this.props.resetFeedbackForm();
+        this.props.postFeedback(values.firstname,values.lastname,values.telnum,values.email,values.agree,values.contactType,values.message);
     }
 
     
@@ -160,6 +161,32 @@ class Contact extends Component {
                                             validEmail: 'Invalid Email Address'
                                         }}
                                      />
+                                </Col>
+                            </Row>
+                            <Row className="form-group">
+                                <Col md={
+                                    {
+                                        size: 6,
+                                        offset: 2
+                                    }
+                                }>
+                                    <div className="form-check">
+                                        <Label check>
+                                            <Control.checkbox className="form-check-input" model=".agree" name="agree"/> {' '}
+                                            <strong>May we contact you?</strong>
+                                        </Label>
+                                    </div>
+                                </Col>
+                                <Col md={
+                                    {
+                                        size: 3,
+                                        offset: 1
+                                    }
+                                }>
+                                    <Control.select className="form-control" model=".contactType" name="contactType">
+                                        <option>Tel.</option>
+                                        <option>Email</option>
+                                    </Control.select>
                                 </Col>
                             </Row>
                             <Row className="form-group">
